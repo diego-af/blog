@@ -63,7 +63,7 @@
 
   font-size: 30px;
 
-  color: black;
+  color: #fff;
 }
 
 .allContainer .subContainer .bodyContainer .bodyDescription {
@@ -75,11 +75,13 @@
   padding: 14px;
 }
 .allContainer .subContainer .bodyContainer .bodyDescription h3 {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-size: 18px;
+  color: #fff;
   font-weight: 400;
   text-indent: 10px;
-  opacity: 0.9;
+  opacity: 0.7;
+  letter-spacing: 1px;
 }
 
 @media (max-width: 650px) {
@@ -92,7 +94,7 @@
 
     font-size: 20px;
 
-    color: black;
+    color: #ffffff;
   }
   .allContainer .subContainer .bodyContainer .bodyDescription h3 {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

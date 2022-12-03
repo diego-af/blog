@@ -5,6 +5,8 @@ import {
   uploadBytesResumable,
   getDownloadURL,
   uploadBytes,
+  listAll,
+  list,
 } from "firebase/storage";
 import { db, storage } from "../../services/firebaseConfig";
 import "./admin.css";
@@ -17,20 +19,53 @@ export function Admin() {
   const [description, setDescription] = useState("");
   const [linkImg, setLinkImg] = useState("");
   const [file, setFile] = useState();
+  const [autor, setAutor] = useState("");
   const [progress, setProgress] = useState(0);
+
+  function getFile(e) {
+    setFile(e.target.files[0]);
+
+    console.log(file);
+
+    const pathImage = `images/${file.name}`;
+    const imageRef = ref(storage, pathImage);
+
+    const uploadTask = uploadBytesResumable(imageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+        setProgress(progress);
+        alert("foi");
+      },
+      (error) => {
+        alert(error);
+      },
+      getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+        setLinkImg(url);
+      })
+    );
+
+    console.log(linkImg);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     const docRef = collection(db, "posts");
-    await addDoc(
+
+    const response = await addDoc(
       collection(docRef, {
-        title: title,
+        autor: autor,
         description: description,
-        autor: "Ele",
-        linkImg: "http://google.com",
+        linkImg: linkImg,
+        title: title,
       })
     );
+    console.log(response);
   }
 
   return (
@@ -72,7 +107,7 @@ export function Admin() {
             type="file"
             className="form-file"
             placeholder={file}
-            onChange={(e) => setFile(e.target.files[0])}
+            onChange={getFile}
           />
           {!linkImg ? (
             <progress value={progress} max="100" />
@@ -83,6 +118,17 @@ export function Admin() {
               style={{ width: "200px", height: "100px" }}
             />
           )}
+        </div>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Autor</label>
+          <input
+            type="text"
+            className="form-control"
+            id="exampleInputEmail1"
+            placeholder="Digite o nome do autor"
+            value={autor}
+            onChange={(e) => setAutor(e.target.value)}
+          />
         </div>
 
         <button type="submit" className="btn">

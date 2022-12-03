@@ -7,6 +7,13 @@
 
 body {
   font-family: "Times New Roman", Times, serif;
+  background: rgb(19, 18, 18);
+  background: linear-gradient(
+    to rigth,
+    90deg,
+    rgba(19, 18, 18, 1) 45%,
+    rgba(54, 32, 34, 0.9374124649859944) 100%
+  );
 }
 
 .content {
@@ -66,4 +73,5 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: 1.2rem;
+  color: #eae0d5;
 }

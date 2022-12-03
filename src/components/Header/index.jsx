@@ -1,6 +1,12 @@
 import React from "react";
 
-import { FaBookOpen, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import {
+  FaBookOpen,
+  FaInstagram,
+  FaLinkedin,
+  FaTwitter,
+  FaGithub,
+} from "react-icons/fa";
 
 import "./index.css";
 export function Header() {
@@ -27,6 +33,9 @@ export function Header() {
             target="blank"
           >
             <FaLinkedin color="#fff" size={22} />
+          </a>
+          <a href="https://github.com/diego-af" target="blank">
+            <FaGithub color="#fff" size={22} />
           </a>
         </div>
       </div>
