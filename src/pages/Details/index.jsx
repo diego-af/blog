@@ -42,7 +42,7 @@ export function Details() {
             </div>
 
             <div className="bodyDescription">
-              <h3> {description}</h3>
+              <h3> - {description} -</h3>
             </div>
             <hr style={{}} />
             <Link to="/" className="btn btn-success font-weigth-bold mt-3 mb-5">
