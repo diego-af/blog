@@ -1,55 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./index.css";
 
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebaseConfig";
 import { Link } from "react-router-dom";
+import { BlogContext } from "../../context/BlogContext";
 
 export function Home() {
-  const [post, setPost] = useState([]);
+  const { GetPost, post } = useContext(BlogContext);
 
   useEffect(() => {
-    async function getPosts() {
-      const postref = collection(db, "posts");
-      await getDocs(postref).then((snapshot) => {
-        let list = [];
-        snapshot.forEach((doc) => {
-          list.push({
-            id: doc.id,
-            title: doc.data().title,
-            linkImg: doc.data().linkImg,
-            description: doc.data().description,
-            autor: doc.data().autor,
-          });
-          setPost(list);
-          console.log(list);
-        });
-      });
-    }
-    getPosts();
+    GetPost();
   }, []);
 
+  console.log(post[0].tittle);
   return (
     <div className="content">
       <div className="main">
-        {post.map((item) => (
-          <div className="subMain mb-10" key={item.id}>
-            <div className="image">
-              <img src={item.linkImg} />
-            </div>
-            <div className="body">
-              <div className="bodyContent">
-                <h3>{item.title}</h3>
-                <Link
-                  to={`/details/${item.id}`}
-                  className=" btn btn-success mt-3"
-                >
-                  Leia Sobre
-                </Link>
+        {post.map((item) => {
+          return (
+            <div className="subMain mb-10">
+              <div className="image">
+                <img src={item.image} />
+              </div>
+              <div className="body">
+                <div className="bodyContent">
+                  <h3 style={{ color: "#ffff" }}>{item.tittle}</h3>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
