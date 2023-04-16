@@ -1,14 +1,5 @@
 import React from "react";
-import { doc, setDoc, addDoc, collection } from "firebase/firestore";
-import {
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  uploadBytes,
-  listAll,
-  list,
-} from "firebase/storage";
-import { db, storage } from "../../services/firebaseConfig";
+
 import "./admin.css";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
