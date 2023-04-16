@@ -5,6 +5,7 @@ import { getDoc, collection, doc } from "firebase/firestore";
 import { db } from "../../services/firebaseConfig";
 import {} from "react-icons";
 import { Link } from "react-router-dom";
+import { supabase } from "../../services/supase";
 
 export function Details() {
   const [post, setPost] = useState("");
@@ -16,15 +17,17 @@ export function Details() {
   const { id } = useParams();
   useEffect(() => {
     async function getPost() {
-      const postRef = doc(db, "posts", id);
+      const { data, error } = await supabase.from("post").select().eq("id", id);
+      console.log(data[0]);
+      // const postRef = doc(db, "posts", id);
 
-      await getDoc(postRef).then((snapshot) => {
-        setTitle(snapshot.data().title);
-        setDescription(snapshot.data().description);
-        setLinkImg(snapshot.data().linkImg);
-        setLinkImg(snapshot.data().linkImg);
-        setAutor(snapshot.data().autor);
-      });
+      // await getDoc(postRef).then((snapshot) => {
+      setTitle(data[0].title);
+      setDescription(data[0].description);
+      setLinkImg(data[0].linkimg);
+      setLinkImg(data[0].linkimg);
+      setAutor(data[0].autor);
+      // });
     }
 
     getPost();
@@ -58,7 +61,7 @@ export function Details() {
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
-          width: "30%",
+          width: "100%",
         }}
       >
         <span style={{ color: "#ffffff", margin: "0px", padding: "10px" }}>
