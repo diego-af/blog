@@ -63,7 +63,7 @@ export function Home() {
       </div>
 
       <div className="fixed bottom-8 right-6 bg-green-800 p-2 rounded-lg  ">
-        <Link to="/admin">Criar post</Link>
+        <Link to="/login">Criar post</Link>
       </div>
     </div>
   );

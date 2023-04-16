@@ -9,6 +9,7 @@ import { useState } from "react";
 import "./login.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { supabase } from "../../services/supase";
 
 export function Login() {
   // const [inititValues, setIinitValues] = useState({
@@ -32,17 +33,23 @@ export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigate();
+
   async function handleSubmit(e) {
     e.preventDefault();
 
-    await signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        toast.success("Redirecionando");
-        navigation("/admin");
-      })
-      .catch(() => {
-        toast.error("Erro ao fazer login, tente novamente ");
-      });
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    console.log(data);
+
+    if (error) {
+      toast.error("Verifique seu email e senha");
+      return;
+    }
+
+    navigation("/admin");
   }
   return (
     <div className="formLogin">
@@ -62,7 +69,7 @@ export function Login() {
           <input
             name="email"
             type="email"
-            className="form-control"
+            className="form-control text-zinc-400"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             placeholder="Digite o email"
@@ -77,7 +84,7 @@ export function Login() {
           <input
             name="password"
             type="password"
-            className="form-control"
+            className="form-control text-zinc-400"
             id="exampleInputPassword1"
             placeholder="Senha"
             value={password}
