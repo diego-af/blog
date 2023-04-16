@@ -6,6 +6,7 @@ import { Admin } from "./pages/Admin/Admin";
 import { Details } from "./pages/Details";
 import { Login } from "./pages/Login/Login";
 
+import "./global.Style.css";
 const routes = createBrowserRouter([
   {
     path: "/",

@@ -11,61 +11,63 @@ import {
 import { db, storage } from "../../services/firebaseConfig";
 import "./admin.css";
 import { useState } from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { supabase } from "../../services/supase";
 
 export function Admin() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [linkImg, setLinkImg] = useState("");
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
   const [autor, setAutor] = useState("");
   const [progress, setProgress] = useState(0);
 
-  function getFile(e) {
+  async function getFile(e) {
     setFile(e.target.files[0]);
+    const imageFile = e.target.files[0];
+    console.log(imageFile);
 
-    console.log(file);
+    const { data, error } = await supabase.storage
+      .from("img")
+      .upload(imageFile.name, imageFile);
 
-    const pathImage = `images/${file.name}`;
-    const imageRef = ref(storage, pathImage);
+    console.log(data);
 
-    const uploadTask = uploadBytesResumable(imageRef, file);
+    if (error) {
+      toast.error("Não foi possivél terminar operação de escolha de imagem");
+      return;
+    }
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-        setProgress(progress);
-        alert("foi");
-      },
-      (error) => {
-        alert(error);
-      },
-      getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-        setLinkImg(url);
-      })
-    );
-
-    console.log(linkImg);
+    const url = await supabase.storage.from("img").getPublicUrl(data.path);
+    console.log(url);
+    setLinkImg(url.data.publicUrl);
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
+    let linkimg;
+    const post = {
+      title,
+      description,
+      linkimg: linkImg,
+      autor,
+    };
+    const { data, error } = await supabase.from("post").insert([post]);
+    if (error) {
+      toast.error("Não possivel inserir seus dados. Tente Novamente");
 
-    const docRef = collection(db, "posts");
+      return;
+    }
 
-    const response = await addDoc(
-      collection(docRef, {
-        autor: autor,
-        description: description,
-        linkImg: linkImg,
-        title: title,
-      })
-    );
-    console.log(response);
+    toast.success("Pos enviado, obrigado por colaboar com o Reino de Deus");
+    setTitle("");
+    setDescription("");
+    setLinkImg("");
+    setFile(null);
+    setAutor("");
+
+    console.log(data);
   }
 
   return (
@@ -76,7 +78,7 @@ export function Admin() {
             Crie seu <span>post</span>
           </p>
         </div>
-        <div className="form-group">
+        <div className="form-group ">
           <label htmlFor="exampleInputEmail1">Titulo</label>
           <input
             type="text"
@@ -109,15 +111,6 @@ export function Admin() {
             placeholder={file}
             onChange={getFile}
           />
-          {!linkImg ? (
-            <progress value={progress} max="100" />
-          ) : (
-            <img
-              src={linkImg}
-              alt="imagem"
-              style={{ width: "200px", height: "100px" }}
-            />
-          )}
         </div>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Autor</label>
@@ -131,10 +124,11 @@ export function Admin() {
           />
         </div>
 
-        <button type="submit" className="btn">
+        <button type="submit" className="btn mt-4">
           Enviar
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 }

@@ -28,11 +28,6 @@
   margin-top: 20px;
 }
 
-@media (max-width: 500px) {
-  .subContainer {
-    width: 100%;
-  }
-}
 .subContainer .downImage {
   width: 70%;
   display: flex;
@@ -50,6 +45,7 @@
 .allContainer .subContainer .bodyContainer {
   width: 100%;
   display: flex;
+  padding: 1rem;
 
   flex-direction: column;
   margin-top: 10px;
@@ -59,7 +55,7 @@
   margin-top: 10px;
 }
 .allContainer .subContainer .bodyContainer .bodyTitle h3 {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: "Inter", "Arial Narrow", Arial, sans-serif;
 
   font-size: 30px;
 
@@ -72,10 +68,10 @@
 .allContainer .subContainer .bodyContainer .bodyDescription {
   width: 100%;
   margin-top: 10px;
-  padding: 14px;
 }
 .allContainer .subContainer .bodyContainer .bodyDescription h3 {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: "Inter", "Arial Narrow", Arial, sans-serif;
+  line-height: 1.5rem;
   font-size: 18px;
   color: #fff;
   font-weight: 400;
@@ -84,24 +80,67 @@
   letter-spacing: 1px;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 1200px) {
+  .allContainer .subContainer .bodyContainer .bodyTitle h3 {
+    font-size: 1.3rem;
+  }
+  .subContainer {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .subContainer .downContainer .downImage {
+    width: 100%;
+  }
+  .subContainer .downContainer .downImage img {
+    width: 60%;
+  }
+}
+@media (max-width: 820px) {
+  .allContainer .subContainer .bodyContainer .bodyTitle h3 {
+    font-size: 1.3rem;
+  }
+  .subContainer {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .subContainer .downContainer .downImage {
+    width: 100%;
+  }
+  .subContainer .downContainer .downImage img {
+    width: 60%;
+  }
+}
+@media (max-width: 768px) {
+  .allContainer .subContainer .bodyContainer .bodyTitle h3 {
+    font-size: 1.3rem;
+  }
+  .subContainer {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .subContainer .downContainer .downImage {
+    width: 100%;
+  }
+  .subContainer .downContainer .downImage img {
+    width: 80%;
+  }
+}
+@media (max-width: 578px) {
+  .allContainer .subContainer .bodyContainer .bodyTitle h3 {
+    font-size: 1.3rem;
+  }
+  .subContainer {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .subContainer .downImage {
+    width: 100%;
+  }
   .subContainer .downImage img {
     width: 100%;
-    height: 300px;
-  }
-  .allContainer .subContainer .bodyContainer .bodyTitle h3 {
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-
-    font-size: 20px;
-
-    color: #ffffff;
-  }
-  .allContainer .subContainer .bodyContainer .bodyDescription h3 {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 15px;
-    text-overflow: initial;
-    text-indent: initial;
-
-    text-align: center;
   }
 }
